@@ -47,7 +47,9 @@ If the item with priority 12 is deleted, missing priorities become: 2, 4, 6
 
 Run:
 
+```bash
 npm install
+```
 
 ## Running the App
 
@@ -59,11 +61,13 @@ Runs both:
 
 Command:
 
+```bash
 npm run dev
+```
 
 Open:
 
-http://localhost:5173
+[http://localhost:5173](http://localhost:5173)
 
 In dev mode, requests to /api are proxied to the Express server.
 
@@ -75,17 +79,19 @@ npm run build
 
 2) Start Express server:
 
+```bash
 npm start
+```
 
 Open:
 
-http://localhost:4000
+[http://localhost:4000](http://localhost:4000)
 
 Express serves the built frontend from dist in this mode.
 
 ## API Reference
 
-Base URL (default): http://localhost:4000
+Base URL (default): [http://localhost:4000](http://localhost:4000)
 
 ### GET /api/todos
 
@@ -93,6 +99,7 @@ Returns all todos sorted by priority, then id.
 
 Response 200:
 
+```json
 [
   {
     "id": 1,
@@ -101,6 +108,7 @@ Response 200:
     "createdAt": "2026-03-25T12:00:00.000Z"
   }
 ]
+```
 
 ### POST /api/todos
 
@@ -108,10 +116,12 @@ Creates a todo.
 
 Request body:
 
+```json
 {
   "title": "Prepare sprint report",
   "priority": 2
 }
+```
 
 Validation:
 - title must be a non-empty string
@@ -148,21 +158,25 @@ A Dockerfile is present in this repository.
 
 Build image:
 
+```bash
 docker build -t priority-todo:latest .
+```
 
 Run container:
 
+```bash
 docker run --rm -p 4000:4000 priority-todo
+```
 
 Then open:
 
-http://localhost:4000
+[http://localhost:4000](http://localhost:4000)
 
 ## Scripts
 
-- npm run dev: run Express and Vite together for development
-- npm run dev:server: run backend with nodemon
-- npm run dev:client: run Vite dev server
-- npm run build: build frontend assets to dist
-- npm run preview: preview built frontend with Vite
-- npm start: run Express server
+- `npm run dev`: run Express and Vite together for development
+- `npm run dev`:server: run backend with nodemon
+- `npm run dev`:client: run Vite dev server
+- `npm run build`: build frontend assets to dist
+- `npm run preview`: preview built frontend with Vite
+- `npm start`: run Express server
