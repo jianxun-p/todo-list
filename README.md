@@ -12,6 +12,10 @@ A simple TODO application where every item must have a positive integer priority
   - Task title
   - Priority (positive integer)
 - Delete todo items
+- Mark todo items as complete
+- Edit task names from the todo list
+- Edit task names and priorities from the todo list
+- On duplicate priority during create, choose to change new task, cancel it, or overwrite the existing task
 - List todos sorted by:
   - Priority ascending
   - ID ascending for ties
@@ -105,6 +109,8 @@ Response 200:
     "id": 1,
     "title": "Prepare sprint report",
     "priority": 2,
+    "completed": false,
+    "completedAt": null,
     "createdAt": "2026-03-25T12:00:00.000Z"
   }
 ]
@@ -137,6 +143,33 @@ Deletes a todo by id.
 
 Responses:
 - 204 no content on success
+- 404 if item not found
+
+### PATCH /api/todos/:id/complete
+
+Marks a todo as complete.
+
+Responses:
+- 200 with updated todo on success
+- 404 if item not found
+- 409 if item is already completed
+
+### PATCH /api/todos/:id
+
+Updates a todo title and priority.
+
+Request body:
+
+```json
+{
+  "title": "Updated task name",
+  "priority": 3
+}
+```
+
+Responses:
+- 200 with updated todo on success
+- 400 if title is missing/empty or priority is not a positive integer
 - 404 if item not found
 
 ### GET /api/priorities/missing

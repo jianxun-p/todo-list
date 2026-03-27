@@ -16,7 +16,11 @@ function getMissingPriorities(items) {
     return [];
   }
 
-  const used = new Set(items.map((item) => item.priority));
+  const used = new Set(
+    items
+      .filter((item) => !item.completed)
+      .map((item) => item.priority)
+  );
   const maxPriority = Math.max(...used);
   const missing = [];
 
@@ -31,6 +35,9 @@ function getMissingPriorities(items) {
 
 function sortByPriorityThenId(items) {
   return [...items].sort((a, b) => {
+    if (a.completed !== b.completed) {
+      return a.completed ? 1 : -1; // Incomplete items first
+    }
     if (a.priority !== b.priority) {
       return a.priority - b.priority;
     }
@@ -64,6 +71,8 @@ app.post("/api/todos", (req, res) => {
     id: nextId,
     title,
     priority,
+    completed: false,
+    completedAt: null,
     createdAt: new Date().toISOString()
   };
 
@@ -71,6 +80,50 @@ app.post("/api/todos", (req, res) => {
   todos.push(todo);
 
   return res.status(201).json(todo);
+});
+
+app.patch("/api/todos/:id/complete", (req, res) => {
+  const id = Number(req.params.id);
+  const todo = todos.find((item) => item.id === id);
+
+  if (!todo) {
+    return res.status(404).json({ message: "Todo not found." });
+  }
+
+  if (todo.completed) {
+    return res.status(409).json({ message: "Todo is already completed." });
+  }
+
+  todo.completed = true;
+  todo.completedAt = new Date().toISOString();
+
+  return res.json(todo);
+});
+
+app.patch("/api/todos/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const title = typeof req.body.title === "string" ? req.body.title.trim() : "";
+  const priority = Number(req.body.priority);
+  const todo = todos.find((item) => item.id === id);
+
+  if (!todo) {
+    return res.status(404).json({ message: "Todo not found." });
+  }
+
+  if (!title) {
+    return res.status(400).json({ message: "Title is required." });
+  }
+
+  if (!Number.isInteger(priority) || priority <= 0) {
+    return res
+      .status(400)
+      .json({ message: "Priority must be a positive integer." });
+  }
+
+  todo.title = title;
+  todo.priority = priority;
+
+  return res.json(todo);
 });
 
 app.delete("/api/todos/:id", (req, res) => {

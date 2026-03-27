@@ -74,6 +74,26 @@ h2 {
   gap: 0.8rem;
 }
 
+.conflict-panel {
+  border: 1px solid #e2b7a4;
+  background: #fff4ef;
+  border-radius: 12px;
+  padding: 0.8rem;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.conflict-panel p {
+  margin: 0;
+  color: #6e2813;
+}
+
+.conflict-actions {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 label {
   display: grid;
   gap: 0.35rem;
@@ -129,7 +149,7 @@ button:hover {
 
 .todo-list li {
   display: grid;
-  grid-template-columns: 1fr auto auto;
+  grid-template-columns: minmax(0, 1fr) auto auto auto auto;
   align-items: center;
   gap: 0.6rem;
   border: 1px solid var(--line);
@@ -142,12 +162,71 @@ button:hover {
   overflow-wrap: anywhere;
 }
 
+.edit-input {
+  width: 100%;
+  min-width: 0;
+}
+
+.edit-priority-input {
+  width: 88px;
+}
+
 .badge {
   font-family: "Space Grotesk", sans-serif;
   background: #eef4e2;
   color: #2e4a08;
   border-radius: 999px;
   padding: 0.22rem 0.6rem;
+}
+
+.secondary {
+  background: #2f5c6a;
+}
+
+.secondary:hover {
+  background: #1f414c;
+}
+
+.ghost {
+  background: #e9e5dd;
+  color: #3b352b;
+}
+
+.ghost:hover {
+  background: #dad3c6;
+}
+
+.save {
+  background: #2a6f40;
+}
+
+.save:hover {
+  background: #1f5530;
+}
+
+.warning {
+  background: #b04a1b;
+}
+
+.warning:hover {
+  background: #8f3a14;
+}
+
+.done-tag {
+  font-family: "Space Grotesk", sans-serif;
+  border-radius: 999px;
+  padding: 0.22rem 0.6rem;
+  background: #dbe7f7;
+  color: #1f3a66;
+}
+
+.todo-list li.is-complete {
+  background: #f6f7f5;
+}
+
+.todo-list li.is-complete .task-text {
+  text-decoration: line-through;
+  color: #5d625b;
 }
 
 .danger {
@@ -188,6 +267,14 @@ button:hover {
     grid-template-columns: 1fr auto;
   }
 
+  .conflict-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .save,
+  .secondary,
+  .ghost,
+  .warning,
   .danger {
     grid-column: 1 / -1;
   }
